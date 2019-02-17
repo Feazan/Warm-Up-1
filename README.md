@@ -1,2 +1,3 @@
-# Warm-Up-1
-CSE 356 Warm Up Project 1
+# RESTful Tic Tac Toe
+
+CSE 356 Warm Up Project 1 to create a RESTful Tic Tac Toe web application
