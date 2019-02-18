@@ -42,13 +42,15 @@ app.get('/', function(req, res) {
 });
 
 app.get('/ttt', function(req, res) {
-	res.render('ttt', { name: name, moment: moment });
+	console.log(name);
+	res.render('form');
 });
 
 app.post('/ttt', function(req, res) {
 	var player = req.body.player;
 	name = player;
-	res.redirect('/ttt');
+	res.render('ttt', { name: name, moment: moment });
+	// res.redirect('/ttt');
 });
 
 app.post('/ttt/play', function(req, res) {
