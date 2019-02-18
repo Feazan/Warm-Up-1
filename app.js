@@ -3,19 +3,20 @@ var moment = require('moment');
 var app = express();
 var bodyParser = require('body-parser');
 app.use(express.static('public'));
+app.use(express.static('controllers'));
 
 app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
 var name = '';
-var game = { grid: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' ], winner: '' };
+// var game = { grid: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' ], winner: '' };
 
 app.get('/', function(req, res) {
 	res.render('home');
 });
 
 app.get('/ttt', function(req, res) {
-	res.render('ttt', { name: name, moment: moment, game: game });
+	res.render('ttt', { name: name, moment: moment });
 });
 
 app.post('/ttt', function(req, res) {
@@ -25,20 +26,24 @@ app.post('/ttt', function(req, res) {
 });
 
 app.post('/ttt/play', function(req, res) {
-	console.log(req.body.grid);
+	console.log('FROM CLIENT', req.body);
+	var grid = req.body.grid;
 	// Write a function to figure out if someone won
+
+	req.body.winner = 'X';
 	// small function to place O in grid
-	// send variable back instead of hello
-	res.status(200).send('Hello');
+	for (var i = 0; i < grid.length; i++) {
+		if (grid[i] === ' ') {
+			grid[i] = 'O';
+			break;
+		}
+	}
+	// send updated grid back
+	console.log('SEND BACK', req.body);
+	res.status(200).send(req.body);
 });
 
-/**
- * if req.url === '/api/ninjas'
- * var ninjas = {[name: 'ryu', age: 29]};
- * res.writeHead(200, {'Content-Type': 'application/json'});
- * res.end(JSON.stringify(ninjas));
- */
-
+// Start the Server
 app.listen(3000, function() {
 	console.log('Server Started...');
 });

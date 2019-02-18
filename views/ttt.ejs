@@ -4,7 +4,6 @@
     <title>Tic Tac Toe</title>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
     <link rel="stylesheet" href="styles.css">
-
 </head>
 <body>
     <h1>Tic Tac Toe</h1>
@@ -18,9 +17,9 @@
     <% } else { %>
         <h4>Hello <%= name %>,  <%= moment().subtract(10, 'days').calendar(); %></h4>
         <div>
-            <table>
-                <tr>
-                    <td id='0'> <%= console.log(game["grid"]) %> </td>
+            <table id='test1'>
+                <tr id='test2'>
+                    <td id='0'></td>
                     <td id='1' class='vertical'></td>
                     <td id='2'></td>
                 </tr>
@@ -40,29 +39,5 @@
         </div>
     <% } %>
 </body>
-
-<script>
-    var game = { grid: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' ], winner: '' };
-    console.log(game);
-    function response_server()
-    {
-        
-    }
-    function userMove(response_server)
-    {
-        $.ajax({
-            type: 'POST',
-            url: '/ttt/play',
-            data: game,
-            success: (something) => console.log(something)
-        });
-    }
-    $("td").click(function()
-    { 
-        $(this).text("X");
-        var id = $(this).attr('id');
-        game["grid"][id] = 'X';
-        userMove(response_server);
-    })
-</script>
+<script src="game.js"></script>
 </html>
