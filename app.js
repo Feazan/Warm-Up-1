@@ -2,6 +2,7 @@ var express = require('express');
 var moment = require('moment');
 var app = express();
 var bodyParser = require('body-parser');
+var jParser = bodyParser.json();
 app.use(express.static('public'));
 app.use(express.static('controllers'));
 
@@ -52,7 +53,7 @@ app.post('/ttt', function(req, res) {
 	// res.redirect('/ttt');
 });
 
-app.post('/ttt/play', function(req, res) {
+app.post('/ttt/play', jParser, function(req, res) {
 	console.log('FROM CLIENT', req.body);
 	var grid = req.body.grid;
 	// small function to place O in grid

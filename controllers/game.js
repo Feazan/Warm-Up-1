@@ -1,28 +1,28 @@
-var game = { grid: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' ], winner: '' };
+const gridClient = [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' ];
 function response_server(something) {
-	game['grid'] = something['grid'];
-	game['winner'] = something['winner'];
-	for (var i = 0; i < game['grid'].length; i++) {
-		if (game['grid'][i] === 'O') {
+	for (var i = 0; i < something['grid'].length; i++) {
+		if (something['grid'][i] === 'O') {
 			$('#' + i).text('O');
 		}
 	}
-	if (game['winner'] !== '') {
-		$('#winnerField').text('Winner: ' + game['winner'] + ' is the winner!');
+	if (something['winner'] !== '') {
+		$('#winnerField').text('Winner: ' + something['winner'] + ' is the winner!');
 	}
-	console.log(game);
+	console.log(something);
 }
-function userMove(response_server) {
-	$.ajax({
-		type: 'POST',
-		url: '/ttt/play',
-		data: game,
-		success: (something) => response_server(something)
-	});
-}
+
 $('td').click(function() {
 	$(this).text('X');
 	var id = $(this).attr('id');
-	game['grid'][id] = 'X';
-	userMove(response_server);
+	gridClient[id] = 'X';
+	$.ajax({
+		type: 'POST',
+		url: '/ttt/play',
+		dataType: 'json',
+		data: JSON.stringify({
+			grid: gridClient
+		}),
+		contentType: 'application/json',
+		success: (something) => response_server(something)
+	});
 });
