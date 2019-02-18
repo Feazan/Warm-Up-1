@@ -7,6 +7,9 @@ function response_server(something) {
 			$('#' + i).text('O');
 		}
 	}
+	if (game['winner'] !== '') {
+		$('#winnerField').text('Winner: ' + game['winner'] + ' is the winner!');
+	}
 	console.log(game);
 }
 function userMove(response_server) {
