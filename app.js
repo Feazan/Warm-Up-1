@@ -34,7 +34,6 @@ function determineWinner(grid) {
 			break;
 		}
 	}
-
 	return str;
 }
 
