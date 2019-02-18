@@ -47,9 +47,8 @@ app.get('/ttt', function(req, res) {
 });
 
 app.post('/ttt', function(req, res) {
-	var player = req.body.player;
-	name = player;
-	res.render('ttt', { name: name, moment: moment });
+	var player = req.body.name;
+	res.render('ttt', { name: player, moment: moment });
 	// res.redirect('/ttt');
 });
 
