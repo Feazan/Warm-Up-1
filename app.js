@@ -10,7 +10,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.set('view engine', 'ejs');
 
 var name = '';
-// var game = { grid: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' ], winner: '' };
+var game = { grid: [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' ], winner: '' };
 var winCondition = [
 	[ 0, 1, 2 ],
 	[ 3, 4, 5 ],
@@ -50,24 +50,23 @@ app.get('/ttt', function(req, res) {
 app.post('/ttt', function(req, res) {
 	var player = req.body.name;
 	res.render('ttt', { name: player, moment: moment });
-	// res.redirect('/ttt');
 });
 
 app.post('/ttt/play', jParser, function(req, res) {
 	console.log('FROM CLIENT', req.body);
-	var grid = req.body.grid;
+	game['grid'] = req.body.grid;
 	// small function to place O in grid
-	for (var i = 0; i < grid.length; i++) {
-		if (grid[i] === ' ') {
-			grid[i] = 'O';
+	for (var i = 0; i < game['grid'].length; i++) {
+		if (game['grid'][i] === ' ') {
+			game['grid'][i] = 'O';
 			break;
 		}
 	}
 	// Function to determine winner
-	req.body.winner = determineWinner(req.body.grid);
+	game['winner'] = determineWinner(game['grid']);
 	// send updated grid back
-	console.log('SEND BACK', req.body);
-	res.status(200).send(req.body);
+	console.log('SEND BACK', game);
+	res.status(200).send(game);
 });
 
 // Start the Server

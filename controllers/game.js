@@ -1,20 +1,21 @@
 const gridClient = [ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' ];
-function response_server(something) {
-	console.log(something);
-	for (var i = 0; i < something['grid'].length; i++) {
-		if (something['grid'][i] === 'O') {
-			$('#' + i).text('O');
+function server_response(gameJSON) {
+	console.log(gameJSON);
+	for (var i = 0; i < gameJSON['grid'].length; i++) {
+		if (gameJSON['grid'][i] === 'O') {
+			$('#' + i).text('O').off('click');
 			gridClient[i] = 'O';
 		}
 	}
-	if (something['winner'] !== '') {
-		$('#winnerField').text('Winner: ' + something['winner'] + ' is the winner!');
+	if (gameJSON['winner'] !== '') {
+		$('#winnerField').text('Winner: ' + gameJSON['winner'] + ' is the winner!');
+		$('td').off('click');
 	}
 }
 
 $('td').click(function() {
 	console.log(gridClient);
-	$(this).text('X');
+	$(this).text('X').off('click');
 	var id = $(this).attr('id');
 	gridClient[id] = 'X';
 	$.ajax({
@@ -25,6 +26,6 @@ $('td').click(function() {
 			grid: gridClient
 		}),
 		contentType: 'application/json',
-		success: (something) => response_server(something)
+		success: (gameJSON) => server_response(gameJSON)
 	});
 });
